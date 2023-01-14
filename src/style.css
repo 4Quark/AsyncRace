@@ -1,0 +1,278 @@
+@font-face {
+    font-family: Yellowtail;
+    src: url('./assets/fonts/Yellowtail-Regular.ttf');
+}
+
+body {
+    margin: 0;
+    font-family: 'Arial';
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    background-color: rgb(56, 56, 56);
+    color: #e2e2e2;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 1600px; 
+    margin: 0 auto;
+}
+
+/* ______ HEADER ______ */
+
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: url(./assets/tire.png);
+    background-size: contain;
+    margin: 20px 0px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-start;
+}
+
+.logo {
+    font-family: 'Yellowtail';
+    color:#ffffff;
+    padding: 20px 40px;
+    font-size: 45px;
+    text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 1em blue, 0 0 0.2em blue;
+}
+
+.header_btn {
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    color: #000000;
+    background-color: #ffffff;
+
+    height: 35px;
+    width: 100px;
+
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.header_btn:hover {
+    box-shadow: 0 0 2em blue;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ______ MAIN SECTION ______ */
+
+.main_wrapper {
+    margin: 10px;
+}
+
+.regular_btn {
+    border-radius: 5px;
+    border: none;
+    color: #061a33;
+    background-color: #b3cbff;
+
+    height: 27px;
+
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.regular_btn:hover {
+    background-color: #ebf197;
+    box-shadow: 1.5px 1.5px 7px 1.5px rgba(255, 255, 255, 0.24);
+    cursor: pointer;
+}
+
+.regular_btn:disabled {
+    background-color: #b1b1b1;
+    color:#5a5858;
+}
+
+/* ______ GARAGE SETTINGS ______ */
+
+.race_btn,
+.reset_btn {
+    background-color: #f4e1e1;
+    width: 70px;
+}
+
+.garage_settings_row {
+    display: flex;
+    justify-content: space-between;
+    width: 270px;
+    margin: 7px;
+}
+
+/* ______ GARAGE ______ */
+
+.car_settings {
+    background: linear-gradient(rgb(56, 56, 56), 30%, #616161);
+}
+
+.car_btn {
+    height: 20px;
+    background-color: #ebebeb;
+    margin-left: 3px;
+    text-transform: capitalize;
+}
+
+.drive_btn {
+    border: 2px solid #ebebeb;
+    border-radius: 5px;
+    color: #ebebeb;
+    background-color: #616161;
+
+    height: 27px;
+    font-size: 12px;
+
+    margin: 3px 0px 10px 3px
+}
+
+.drive_btn:hover {
+    border: 2px solid #e9eb86;
+    color: #e9eb86;
+    cursor: pointer;
+}
+
+.drive_btn:disabled {
+    border: 2px solid #b1b1b1;
+    color: #b1b1b1;
+}
+
+.drive_btn:disabled:hover {
+    border: 2px solid #b1b1b1;
+    color: #b1b1b1;
+    cursor: pointer;
+}
+
+.car_img {
+    position: absolute;
+    left: 90px;
+    transform: rotate(90deg);
+    width: 80px;
+    height: 50px;
+}
+
+.flag_img {
+    width: 40px;
+    height: 43px;
+}
+
+.car_road {
+    background-color: #616161;
+}
+
+.car_road_top {
+    display: flex;
+    justify-content: space-between;
+}
+
+hr {
+    border: none;
+    border-top: 3px dashed #ebebeb;
+    width: 100%;
+    height: 10px;
+    margin: 0;
+}
+
+.pagination_btn {
+    width: 80px;
+    margin: 10px;
+}
+
+/* ______ WINNERS ______ */
+
+.winners_table_head {
+    background-color: #c269537c;
+}
+
+.small_car_img {
+    width: 40px;
+    transform: rotate(90deg);
+}
+
+/* ______ FOOTER ______ */
+
+.github_logo {
+    background-image: url(./assets/git_logo.png);
+    background-size: 30px;
+    display: block;
+    font-size: 0;
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+}
+
+.RSS_logo {
+    background-image: url(./assets/RSSchool_logo.png);
+    background-size: 61px 23px;
+    display: block;
+    font-size: 0;
+    height: 23px;
+    width: 61px;
+    margin: 10px;
+}
+
+.footer_info_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    background-color: #959595;
+}
+
+/* ______ MODAL ______ */
+
+.modal {
+    display: none;
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    color: #000000;
+}
+
+.modal-content {
+    position: relative;
+    margin: auto;
+    width: 50%;
+    padding: 5px 16px 30px 16px;
+    background: #fafafad5;
+    box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+    border-radius: 9px;
+}
+
+.close {
+    float: right;
+}
+
+.close:hover {
+    color: #000;
+    cursor: pointer;
+}
+
+/* ______ INVISIBLE ______ */
+
+.invisible {
+    display: none;
+}
+
+.active {
+    background-color: #db883a;
+}
+
+.active:hover {
+    background-color: #ffaf65;
+    cursor: pointer;
+}
