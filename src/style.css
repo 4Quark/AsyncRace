@@ -161,8 +161,11 @@ body {
 }
 
 .flag_img {
-    width: 40px;
-    height: 43px;
+    background-image: url('../src/assets/flag.svg');
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
 .car_road {
@@ -230,36 +233,48 @@ hr {
 
 /* ______ MODAL ______ */
 
-.modal {
-    display: none;
-    position: fixed; 
-    z-index: 1; 
-    padding-top: 100px; 
+.popup {
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    color: #000000;
+    background-color: rgba(41, 41, 41, 0.6);
+    color: black;
 }
 
-.modal-content {
+.modal_wrapper {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin: auto;
+    padding: 0;
+    padding-bottom: 24px;
     width: 50%;
-    padding: 5px 16px 30px 16px;
-    background: #fafafad5;
-    box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
-    border-radius: 9px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.modal_window {
+    position: relative;
+    margin-top: 10px;
+    padding: 24px;
+    width: 100%;
+    background-color: #ffffff;
+    border: 2px solid blue;
+    border-radius: 5px;
 }
 
 .close {
-    float: right;
-}
-
-.close:hover {
-    color: #000;
     cursor: pointer;
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    color: white;
 }
 
 /* ______ INVISIBLE ______ */

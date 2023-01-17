@@ -1,4 +1,6 @@
+import listener from "./controller";
 import Garage from "./garage";
+import Server from "./server";
 import Winners from "./winners";
 
 // export const enum pageIDs {
@@ -29,9 +31,11 @@ class AppView {
   constructor() {}
 
   public renderApp(): void {
-    Garage.main();
-    Winners.mainWin();
+    Garage.render();
+    Winners.render();
+    listener();
   }
+
 }
 
 export default AppView;

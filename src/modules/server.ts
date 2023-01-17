@@ -1,128 +1,195 @@
-const baseURL = 'http://127.0.0.1:3000';
+import { carData, queryP, winnerData } from "./types";
 
-const path = {
-    garage: '/garage',
-    engine: '/engine',
-    winners: '/winners',
-};
 
-type queryP = {
-    key: string, 
-    value: string,
-}[];
+class Server {
+    static baseURL = 'http://127.0.0.1:3000';
 
-const generateQueryString = (queryParams: queryP = []) => queryParams.length 
+    static path = {
+        garage: '/garage',
+        engine: '/engine',
+        winners: '/winners',
+    };
+
+    static generateQueryString = (queryParams: queryP = []) => queryParams.length 
     ? `?${queryParams.map(x => `${x.key}=${x.value}`).join('&')}`
     : '';
 
-const getCars = async (queryParams: queryP) => {
-    const response = await fetch(`${baseURL}${path.garage}${generateQueryString(queryParams)}`);
-    const cars = await response.json();
-    return cars;
-};
+    static getCars = async (queryParams: queryP) => {
+        const response = await fetch(`${Server.baseURL}${Server.path.garage}${Server.generateQueryString(queryParams)}`);
+        const cars = await response.json();
+        return cars;
+    };
+    
+    static getTotalCountCars = async () => {
+        const response = await fetch(`${Server.baseURL}${Server.path.garage}${Server.generateQueryString([{key: '_page', value: '0'}])}`);
+        const carCount = Number(response.headers.get('X-Total-Count'));
+        return carCount;
+    };
+    
+    static getCar = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.garage}/${id}`);
+            const car = await response.json();
+            return car;
+        } catch (error) {
+            console.error('getCar - 404 NOT FOUND');
+        }
+    };
+    
+    static createCar = async (body: carData) => {
+        const response = await fetch(`${Server.baseURL}${Server.path.garage}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+        const car = await response.json();
+        return car;
+    };
+    
+    static deleteCar = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.garage}/${id}`, {
+                method: 'DELETE',
+            });
+            const car = await response.json();
+            return car;
+        } catch (error) {
+            console.error('deleteCar - 404 NOT FOUND');
+        }
+    }; 
+    
+    static updateCar = async (id: number, body: carData) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.garage}/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+            const car = await response.json();
+            return car;
+        } catch (error) {
+            console.error('updateCar - 404 NOT FOUND');
+        }
+    };
+    
+    static updateCarParamater = async (id: number, body: string) => {
+        const response = await fetch(`${Server.baseURL}${Server.path.garage}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+        const car = await response.json();
+        return car;
+    };
+    
+    static engineStart = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.engine}${Server.generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'started'}])}`, {
+                method: 'PATCH',
+            });
+            const car = await response.json()
+            return car;
+        } catch (error) {
+            console.error('engineStart - 400 BAD REQUEST | 404 NOT FOUND');
+        }
+    };
+    
+    static engineStop = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.engine}${Server.generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'stopped'}])}`, {
+                method: 'PATCH',
+            });
+            const car = await response.json();
+            return car;
+        } catch (error) {
+            console.error('engineStop - 400 BAD REQUEST | 404 NOT FOUND');
+        }
+    };
+    
+    static switchEnginetoDrive = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.engine}${Server.generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'drive'}])}`, {
+                method: 'PATCH',
+            });
+            const car = await response.json();
+            const success = car.success;
+            return success;
+        } catch (error) {
+            console.error(id + '- switchEnginetoDrive - 400 BAD REQUEST | 404 NOT FOUND | 429 TOO MANY REQUESTS  | 500 INTERNAL SERVER ERROR ');
+        }
+    };
+    
+    static getWinners = async (queryParams: queryP) => {
+        const response = await fetch(`${Server.baseURL}${Server.path.winners}${Server.generateQueryString(queryParams)}`);
+        const cars: winnerData[] = await response.json();
+        return cars;
+    };
 
-const getTotalCountCars = async () => {
-    const response = await fetch(`${baseURL}${path.garage}${generateQueryString([{key: '_page', value: '0'}])}`);
-    const carCount = Number(response.headers.get('X-Total-Count'));
-    return carCount;
-};
+    static getWinner = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.winners}/${id}`);
+            const car: winnerData = await response.json();
+            return car;
+        } catch (error) {
+            console.error('getWinner - 404 NOT FOUND');
+        }
+    };
+    
+    static getTotalCountWinners = async () => {
+        const response = await fetch(`${Server.baseURL}${Server.path.winners}${Server.generateQueryString([{key: '_page', value: '0'}])}`);
+        const carCount = Number(response.headers.get('X-Total-Count'));
+        return carCount;
+    };
 
-const getCar = async (id: string) => {
-    const response = await fetch(`${baseURL}${path.garage}/${id}`);
-    const car = await response.json();
-    return car;
-};
+    static deleteWinner = async (id: number) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.winners}/${id}`, {
+                method: 'DELETE',
+            });
+            const car = await response.json();
+            return car;
+        } catch (error) {
+            console.error('deleteWinner - 404 NOT FOUND');
+        }
+    }; 
 
-const createCar = async (body: string) => {
-    const response = await fetch(`${baseURL}${path.garage}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    });
-    const car = await response.json();
-    return car;
-};
+    static updateWinner = async (id: number, body: winnerData) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.winners}/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+            const car = await response.json();
+            return car;
+        } catch (error) {
+            console.error('updateWinner - 404 NOT FOUND');
+        }
+    };
+    
+    static createWinner = async (body: winnerData) => {
+        try {
+            const response = await fetch(`${Server.baseURL}${Server.path.winners}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+            const winner = await response.json();
+            return winner;
+        } catch (error) {
+            console.error('createWinner - 500 INTERNAL SERVER ERROR ');
+        }
+    };
+}
 
-const deleteCar = async (id: string) => {
-    const response = await fetch(`${baseURL}${path.garage}/${id}`, {
-        method: 'DELETE',
-    });
-    const car = await response.json();
-    return car;
-}; 
-
-const updateCar = async (id: string, body: string) => {
-    const response = await fetch(`${baseURL}${path.garage}/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    });
-    const car = await response.json();
-    return car;
-};
-
-const updateCarParamater = async (id: string, body: string) => {
-    const response = await fetch(`${baseURL}${path.garage}/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    });
-    const car = await response.json();
-    return car;
-};
-
-const engineStart = async (id: string) => {
-    const response = await fetch(`${baseURL}${path.engine}${generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'started'}])}`, {
-        method: 'PATCH',
-    });
-    const car = await response.json()
-    return car;
-};
-
-const engineStop = async (id: string) => {
-    const response = await fetch(`${baseURL}${path.engine}${generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'stopped'}])}`, {
-        method: 'PATCH',
-    });
-    const car = await response.json();
-    return car;
-};
-
-const switchEnginetoDrive = async (id: string) => {
-    const response = await fetch(`${baseURL}${path.engine}${generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'drive'}])}`, {
-        method: 'PATCH',
-    });
-    const car = await response.json();
-    const success = car.success;
-    return success;
-};
-
-
-const getWinners = async (queryParams: queryP) => {
-    const response = await fetch(`${baseURL}${path.winners}${generateQueryString(queryParams)}`);
-    const cars = await response.json();
-    return cars;
-};
-
-const getTotalCountWinners = async () => {
-    const response = await fetch(`${baseURL}${path.winners}${generateQueryString([{key: '_page', value: '0'}])}`);
-    const carCount = Number(response.headers.get('X-Total-Count'));
-    return carCount;
-};
-
-const createWinner = async (body: string) => {
-    const response = await fetch(`${baseURL}${path.winners}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    });
-    const winner = await response.json();
-    return winner;
-};
+export default Server;

@@ -1,24 +1,21 @@
 import Pagination from "./pagination";
-
-type Winner = {
-    id: string,
-    wins: number,
-    time: number,
-};
+import Server from "./server";
+import { winnerData } from "./types";
 
 class Winners {
     static totalWinnersCount = 0;
 
     static winnersCount = async function() {
         const PAGE_TOTAL_WINNERS = document.querySelector('.winners_page_total');
-        Winners.totalWinnersCount = await getTotalCountWinners();
+        Winners.totalWinnersCount = await Server.getTotalCountWinners();
         if (PAGE_TOTAL_WINNERS) PAGE_TOTAL_WINNERS.innerHTML = `${Math.ceil(Winners.totalWinnersCount / 10)}`;
     }
 
-    static winnerCreator = async function (id: string, wins: number, time: number) {
+    static winnerCreator = async function (id: number, wins: number, time: number) {
         const WIN_CARD_HTML = document.createElement('tr');
-        WIN_CARD_HTML.className = 'winner_row';
-        const car = await getCar(id);
+        WIN_CARD_HTML.className = `winner_row_${id}`;
+        WIN_CARD_HTML.classList.add('winner_row');
+        const car = await Server.getCar(+id);
         WIN_CARD_HTML.innerHTML = `
                                     <td>1</td>
                                     <td>
@@ -35,10 +32,25 @@ class Winners {
         Winners.winnersCount();
     }
 
-    static mainWin = async () => {
+    static addWin = async(id: number, time: number) => {
+        const car = await Server.getWinner(id);
+        if (car) {
+            if (car.wins) {
+                if (car.time < time) time = car.time;
+                await Server.updateWinner(id, {wins: car.wins + 1, time: time});
+            } else {
+              await Server.createWinner({id: id, wins: 1, time: time});
+            }
+        }
+        Winners.render();
+    }
+
+    static render = async () => {
         document.querySelectorAll('.winner_row').forEach(el => el.remove());
-        const winners: Winner[] = await getWinners([{key: '_page', value: `${Pagination.currentPageW}`}, {key: '_limit', value: `${10}`}]); 
-        winners.forEach(el => Winners.winnerCreator(el.id, el.wins, el.time));
+        const winners: winnerData[] = await Server.getWinners([{key: '_page', value: `${Pagination.currentPageW}`}, {key: '_limit', value: `${10}`}]); 
+        winners.forEach(el => {
+            if (el.id) Winners.winnerCreator(el.id, el.wins, el.time);
+        });
         Pagination.btnWinnersDesabling();
     }
 

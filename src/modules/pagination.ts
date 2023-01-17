@@ -1,5 +1,8 @@
 import Garage from "./garage";
+import Server from "./server";
 import Winners from "./winners";
+
+// если на странице нет машин, перерисовать
 
 const PAGE_NUMBER_GARAGE: HTMLElement | null = document.querySelector('.garage_page');
 const PAGE_PREVIOUS_GARAGE: HTMLElement | null = document.querySelector('.garage_page_prev');
@@ -14,12 +17,10 @@ const PAGE_CURRENT_WINNERS: HTMLElement | null  = document.querySelector('.winne
 class Pagination {
     static currentPageG = 1;
     static currentPageW = 1;
-    // static totalCarCount = 0;
-    // static totalWinnersCount = 0;
 
     static garageNext() {
         Pagination.currentPageG += 1;
-        Garage.main();
+        Garage.render();
         if (PAGE_NUMBER_GARAGE) PAGE_NUMBER_GARAGE.innerHTML = 'Page #' + Pagination.currentPageG;
         if (PAGE_CURRENT_GARAGE) PAGE_CURRENT_GARAGE.innerHTML = `${Pagination.currentPageG}`;
         Pagination.btnDesabling();
@@ -27,14 +28,14 @@ class Pagination {
 
     static garagePrev() {
         Pagination.currentPageG -= 1;
-        Garage.main();
+        Garage.render();
         if (PAGE_NUMBER_GARAGE) PAGE_NUMBER_GARAGE.innerHTML = 'Page #' + Pagination.currentPageG;
         if (PAGE_CURRENT_GARAGE) PAGE_CURRENT_GARAGE.innerHTML = `${Pagination.currentPageG}`;
         Pagination.btnDesabling();
     }
 
     static async btnDesabling () {
-        Garage.totalCarCount = await getTotalCountCars();
+        Garage.totalCarCount = await Server.getTotalCountCars();
     
         if (PAGE_PREVIOUS_GARAGE instanceof HTMLButtonElement) {
             if (Pagination.currentPageG == 1) {
@@ -51,7 +52,7 @@ class Pagination {
 
     static winnersNext() {
         Pagination.currentPageW += 1;
-        Winners.mainWin();
+        Winners.render();
         if (PAGE_NUMBER_WINNERS) PAGE_NUMBER_WINNERS.innerHTML = 'Page #' + Pagination.currentPageW;
         if (PAGE_CURRENT_WINNERS) PAGE_CURRENT_WINNERS.innerHTML = `${Pagination.currentPageW}`;
         Pagination.btnWinnersDesabling();
@@ -59,14 +60,14 @@ class Pagination {
 
     static winnersPrev() {
         Pagination.currentPageW -= 1;
-        Winners.mainWin();
+        Winners.render();
         if (PAGE_NUMBER_WINNERS) PAGE_NUMBER_WINNERS.innerHTML = 'Page #' + Pagination.currentPageW;
         if (PAGE_CURRENT_WINNERS) PAGE_CURRENT_WINNERS.innerHTML = `${Pagination.currentPageW}`;
         Pagination.btnWinnersDesabling();
     }
 
     static async btnWinnersDesabling () {
-        Winners.totalWinnersCount = await getTotalCountWinners();
+        Winners.totalWinnersCount = await Server.getTotalCountWinners();
         if (PAGE_PREVIOUS_WINNERS instanceof HTMLButtonElement) {
             if (Pagination.currentPageW == 1) {
                 PAGE_PREVIOUS_WINNERS.disabled = true;
