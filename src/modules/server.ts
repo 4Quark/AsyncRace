@@ -32,7 +32,7 @@ class Server {
             const car = await response.json();
             return car;
         } catch (error) {
-            console.error('getCar - 404 NOT FOUND');
+            console.log('getCar - 404 NOT FOUND');
         }
     };
     
@@ -56,7 +56,7 @@ class Server {
             const car = await response.json();
             return car;
         } catch (error) {
-            console.error('deleteCar - 404 NOT FOUND');
+            console.log('deleteCar - 404 NOT FOUND');
         }
     }; 
     
@@ -72,7 +72,7 @@ class Server {
             const car = await response.json();
             return car;
         } catch (error) {
-            console.error('updateCar - 404 NOT FOUND');
+            console.log('updateCar - 404 NOT FOUND');
         }
     };
     
@@ -96,7 +96,7 @@ class Server {
             const car = await response.json()
             return car;
         } catch (error) {
-            console.error('engineStart - 400 BAD REQUEST | 404 NOT FOUND');
+            console.log('engineStart - 400 BAD REQUEST | 404 NOT FOUND');
         }
     };
     
@@ -108,7 +108,7 @@ class Server {
             const car = await response.json();
             return car;
         } catch (error) {
-            console.error('engineStop - 400 BAD REQUEST | 404 NOT FOUND');
+            console.log('engineStop - 400 BAD REQUEST | 404 NOT FOUND');
         }
     };
     
@@ -120,8 +120,10 @@ class Server {
             const car = await response.json();
             const success = car.success;
             return success;
-        } catch (error) {
-            console.error(id + '- switchEnginetoDrive - 400 BAD REQUEST | 404 NOT FOUND | 429 TOO MANY REQUESTS  | 500 INTERNAL SERVER ERROR ');
+        } catch (error: any) {
+            console.log('error.text()' + error.text());
+            console.log(id + '- switchEnginetoDrive - 400 BAD REQUEST | 404 NOT FOUND | 429 TOO MANY REQUESTS  | 500 INTERNAL SERVER ERROR ');
+            // 500 - Car has been stopped suddenly. It's engine was broken down.
         }
     };
     
@@ -137,7 +139,7 @@ class Server {
             const car: winnerData = await response.json();
             return car;
         } catch (error) {
-            console.error('getWinner - 404 NOT FOUND');
+            console.log('getWinner - 404 NOT FOUND');
         }
     };
     
@@ -155,7 +157,7 @@ class Server {
             const car = await response.json();
             return car;
         } catch (error) {
-            console.error('deleteWinner - 404 NOT FOUND');
+            console.log('deleteWinner - 404 NOT FOUND');
         }
     }; 
 
@@ -171,7 +173,7 @@ class Server {
             const car = await response.json();
             return car;
         } catch (error) {
-            console.error('updateWinner - 404 NOT FOUND');
+            console.log('updateWinner - 404 NOT FOUND');
         }
     };
     
@@ -187,7 +189,7 @@ class Server {
             const winner = await response.json();
             return winner;
         } catch (error) {
-            console.error('createWinner - 500 INTERNAL SERVER ERROR ');
+            console.log('createWinner - 500 INTERNAL SERVER ERROR ');
         }
     };
 }

@@ -9,6 +9,7 @@ class Popup {
   
       const close = document.createElement('div');
       close.classList.add('close');
+      close.innerText = 'X';
       close.addEventListener('click', Popup.removePopup);
   
       const modalWindow = document.createElement('div');
@@ -28,7 +29,9 @@ class Popup {
       document.body.append(popup);
   
       window.onclick = function (event) {
-        if (event.target == popup) Popup.removePopup;
+        if (event.target == popup) {
+          setTimeout(Popup.removePopup, 0);
+        }
       };
   
       setTimeout(Popup.removePopup, delay);

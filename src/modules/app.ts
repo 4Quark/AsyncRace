@@ -1,4 +1,4 @@
-import AppView from './appView';
+import AppView from './view/appView';
 
 class App {
   private view: AppView;

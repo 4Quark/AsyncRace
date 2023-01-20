@@ -19,3 +19,5 @@ export type winnerData = {
     time: number,
     id?: number,
 }
+
+export type sort = 'id' | 'wins' | 'time';
