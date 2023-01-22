@@ -1,7 +1,7 @@
 import AppView from "./appView";
 
 class Header {    
-    private static defaultLogo: string = 'Async Race';
+    private static defaultLogo = 'Async Race';
 
     private static pages: string[] = ['garage', 'winners'];
 

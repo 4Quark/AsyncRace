@@ -120,10 +120,8 @@ class Server {
             const car = await response.json();
             const success = car.success;
             return success;
-        } catch (error: any) {
-            console.log('error.text()' + error.text());
+        } catch (error) {
             console.log(id + '- switchEnginetoDrive - 400 BAD REQUEST | 404 NOT FOUND | 429 TOO MANY REQUESTS  | 500 INTERNAL SERVER ERROR ');
-            // 500 - Car has been stopped suddenly. It's engine was broken down.
         }
     };
     

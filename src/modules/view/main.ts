@@ -93,6 +93,7 @@ class Main {
 
     static winners() {
         const winnersHeader = document.createElement('h2');
+        winnersHeader.classList.add('winners_and_count');
         winnersHeader.innerText = 'Winners';
 
         Main.headerWinners.classList.add('winners_page');
@@ -112,15 +113,15 @@ class Main {
         tCar.innerText = 'Car';
 
         const tName = document.createElement('th');
-        tName.innerText = 'Name';
+        tName.innerText = 'Name ⬍';
         tName.addEventListener('click', () => Winners.sortWinners('id'));
 
         const tWins = document.createElement('th');
-        tWins.innerText = 'Wins';
+        tWins.innerText = 'Wins ⬍';
         tWins.addEventListener('click', () => Winners.sortWinners('wins'));
 
         const tTime = document.createElement('th');
-        tTime.innerText = 'Best time (sec.)';
+        tTime.innerText = 'Best time (sec.) ⬍';
         tTime.addEventListener('click', () => Winners.sortWinners('time'));
         
         const thead = document.createElement('tr');

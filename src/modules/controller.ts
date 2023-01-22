@@ -34,11 +34,8 @@ export const carStatus = function (id: number, status: string) {
     const carPic = document.getElementById(`${id}-pic`)?.parentNode;
     const picture = document.createElement('div');
     picture.classList.add('car_status');
-    if (status === 'broken') {
-        picture.innerHTML = "Car's engine was broken down";
-    } else if (status === 'winner') {
-        picture.innerHTML = "¡ WINNER !";
-    } else picture.innerHTML = `Time: ${status} sec.`;
+    if (status === 'broken') picture.innerHTML = "Car's engine was broken down";
+    if (status === 'winner') picture.innerHTML = "¡ WINNER !";
     if (carPic) carPic.append(picture);
 }
 
