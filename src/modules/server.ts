@@ -113,16 +113,12 @@ class Server {
     };
     
     static switchEnginetoDrive = async (id: number) => {
-        try {
-            const response = await fetch(`${Server.baseURL}${Server.path.engine}${Server.generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'drive'}])}`, {
-                method: 'PATCH',
-            });
-            const car = await response.json();
-            const success = car.success;
-            return success;
-        } catch (error) {
-            console.log(id + '- switchEnginetoDrive - 400 BAD REQUEST | 404 NOT FOUND | 429 TOO MANY REQUESTS  | 500 INTERNAL SERVER ERROR ');
-        }
+        const response = await fetch(`${Server.baseURL}${Server.path.engine}${Server.generateQueryString([{key: 'id', value: id}, {key: 'status', value: 'drive'}])}`, {
+            method: 'PATCH',
+        });
+        const car = await response.json();
+        const success = car.success;
+        return success;
     };
     
     static getWinners = async (queryParams: queryP) => {
